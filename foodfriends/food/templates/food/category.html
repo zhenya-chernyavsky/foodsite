@@ -1,0 +1,102 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FoodFriends</title>
+<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap');
+</style>
+<script src="https://kit.fontawesome.com/e990b6ab67.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">FoodFriends <i class="fa-solid fa-kitchen-set"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Переключатель навигации">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+
+          <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#">Category</a>
+        <ul class="dropdown-menu">
+            {% for item in category %}
+            <li><a class="dropdown-item" href="{{ item.get_absolute_url }}">{{item.category}}</a></li>
+            {% endfor %}
+            </ul>
+            </li>
+
+
+        <a class="nav-link" href="{% url 'home' %}">Recipes</a>
+        <a class="nav-link disabled">Hello, my friend</a>
+        </ul>
+
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-current="page" href="#"><i class="fa-sharp fa-solid fa-user"></i></a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Регистрация</a></li>
+            <li><a class="dropdown-item" href="#">Авторизация</a></li>
+          </ul>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link activ" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+        </li>
+
+          </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+<div class="container mt-4">
+    <h1>{{ title }}</h1>
+    <div class="row">
+        <div class="col-md-5">
+            {% for item in food %}
+            <div class="card mb-3">
+                <div class="card-header">
+                {% for categor in item.category.all %}
+                    {{ categor }}
+                      {% endfor %}
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body"></div>
+                        {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="" width="350" class="mr-3">
+                        {% else %}
+                        <img src="https://picsum.photos/350/235/?blur" alt="" class="mr-3">
+                        {% endif %}
+                    </div>
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.content|linebreaks|truncatewords:50 }}</p>
+                    <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Read more...</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ item.create_at|date:"Y-m-d H:i:s" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div
+</body>
+</html>

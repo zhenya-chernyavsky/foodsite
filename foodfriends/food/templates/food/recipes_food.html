@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block recipes %}
+
+<div class="container mt-4">
+    <h1>{{ title }}</h1>
+    <div class="d-flex flex-wrap">
+      {% for item in recipes %}
+      <div class="mx-1 card mb-3" style="min-width:40%; max-width:40%">
+          <div class="card-header">
+            <h3>{{ item.title }}</h3>
+          </div>
+          <div class="card-body">
+              <div class="media">
+                  <div class="media-body"></div>
+                  {% if item.photo %}
+                  <img src="{{ item.photo.url }}" alt="" width="350" class="mr-3">
+                  {% else %}
+                  <img src="https://picsum.photos/350/235/?blur" alt="" class="mr-3">
+                  {% endif %}
+              </div>
+              <p class="card-text">{{ item.content|linebreaks }}</p>
+          </div>
+          <div class="card-footer text-muted">
+              {{ item.create_at|date:"Y-m-d H:i:s" }}
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+

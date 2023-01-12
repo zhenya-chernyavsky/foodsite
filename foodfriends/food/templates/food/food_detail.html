@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <h1>{{ food_item.title }}</h1>
+    <div class="row">
+        <div class="col-md-5">
+
+            <div class="card mb-3">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body"></div>
+                        {% if food_item.photo %}
+                        <img src="{{ food_item.photo.url }}" alt="" width="350" class="mr-3">
+                        {% else %}
+                        <img src="https://picsum.photos/350/235/?blur" alt="" class="mr-3">
+                        {% endif %}
+                    </div>
+                    <h5 class="card-title">{{ food_item.title }}</h5>
+                    <p class="card-text">{{ food_item.content|linebreaks|truncatewords:50 }}</p>
+                 </div>
+                <div class="card-footer text-muted">
+                    {{ food_item.create_at|date:"Y-m-d H:i:s" }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
